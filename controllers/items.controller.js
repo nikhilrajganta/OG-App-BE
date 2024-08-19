@@ -1,3 +1,4 @@
+import { Items } from "../entities/items.entity.js";
 import {
   deleteItem,
   updateItem,
@@ -19,10 +20,11 @@ async function getAllItem(request, response) {
 async function getallItemById(request, response) {
   try {
     const { id } = request.params;
-    const product = await getItemById(id);
-    response.send(product.data);
+    // console.log(id);
+    const item = await getItemById(id);
+    response.send(item.data);
   } catch (err) {
-    response.status(400).send({ msg: "Unable to retrive the product by Id" });
+    response.status(400).send({ msg: "Unable to retrive the Item by Id" });
   }
 }
 
@@ -33,7 +35,6 @@ async function CreateNewItemData(req, res) {
       ...data,
       id: uuidv4(),
     };
-    console.log(addItem);
     await CreateNewItem(addItem);
     res.send(addItem);
   } catch (err) {
@@ -44,21 +45,21 @@ async function CreateNewItemData(req, res) {
 async function updateItemData(request, response) {
   const { id } = request.params;
   const updateData = request.body;
-  const existing = await Products.get({ id }).go();
+  const existing = await Items.get({ id }).go();
 
   try {
     const final = await updateItem(existing, updateData);
-    console.log(final.data);
+    // console.log(final.data);
     response.send(final.data);
   } catch (err) {
-    response.send({ msg: "Failed to Update the Product" });
+    console.log(err);
+    response.send({ msg: "Failed to Update the Item" });
   }
 }
 
 async function deleteItemData(request, response) {
   const { id } = request.params;
-  // await Movies.get({ productId }).go();
-  getProductById(productId);
+  getItemById(id);
 
   try {
     await deleteItem(id);

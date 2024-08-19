@@ -1,7 +1,7 @@
 import { Items } from "../entities/items.entity.js";
 
-async function deleteItem(productId) {
-  return await Items.delete({ productId }).go();
+async function deleteItem(id) {
+  return await Items.delete({ id }).go();
 }
 
 async function updateItem(existing, updateData) {
@@ -12,8 +12,8 @@ async function CreateNewItem(addProduct) {
   return await Items.create(addProduct).go();
 }
 
-async function getItemById(productId) {
-  return await Items.get({ productId }).go();
+async function getItemById(id) {
+  return await Items.get({ id }).go();
 }
 
 async function getItems() {
