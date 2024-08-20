@@ -1,4 +1,5 @@
 import express from "express";
+import { auth } from "../middlewares/auth.middleware.js";
 
 import {
   CreateNewItemData,
@@ -10,7 +11,7 @@ import {
 
 const router = express.Router();
 
-router.route("/").get(getAllItem).post(CreateNewItemData);
+router.route("/").get(getAllItem).post(auth, CreateNewItemData);
 
 router
   .route("/:id")
