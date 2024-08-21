@@ -1,6 +1,7 @@
 import { Items } from "../entities/items.entity.js";
 
 async function deleteItem(id) {
+  console.log("service delete");
   return await Items.delete({ id }).go();
 }
 

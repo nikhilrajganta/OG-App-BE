@@ -11,7 +11,7 @@ import {
 
 const router = express.Router();
 
-router.route("/").get(getAllItem).post(auth, CreateNewItemData);
+router.route("/").get(getAllItem).post(CreateNewItemData);
 
 router
   .route("/:id")

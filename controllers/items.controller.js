@@ -60,10 +60,12 @@ async function updateItemData(request, response) {
 async function deleteItemData(request, response) {
   const { id } = request.params;
   getItemById(id);
+  console.log(id);
 
   try {
     await deleteItem(id);
-    response.send("Item deleted 🎉");
+    console.log("delete clicked");
+    response.send({ msg: "Failed to Update the Item" });
   } catch (err) {
     response.status(404).send("No such Item 🥲");
   }
