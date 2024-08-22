@@ -1,41 +1,38 @@
-import { Entity } from "electrodb"; // ORM - object relational mapping
+import { Entity } from "electrodb"; // ORM(Object relation mapping) // Adapter on adapter
+
 import { client } from "../util/dbconnection.js";
 
-const User = new Entity(
+const Session = new Entity(
   {
     model: {
-      entity: "User",
-      version: "2",
-      service: "UserService",
+      entity: "session",
+      version: "1",
+      service: "sessionService",
     },
     attributes: {
       username: {
         type: "string",
+        required: true,
       },
-      password: {
+      token: {
         type: "string",
-      },
-      roleId: {
-        type: "number",
         required: true,
       },
     },
     indexes: {
       primary: {
         pk: {
-          // highlight-next-line
           field: "pk",
-          facets: ["username"],
+          facets: ["token"],
         },
         sk: {
-          // highlight-next-line
           field: "sk",
           facets: [],
         },
       },
     },
   },
-  { client, table: "user" }
+  { client, table: "Session" }
 );
 
-export { User };
+export { Session };

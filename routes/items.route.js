@@ -1,6 +1,6 @@
 import express from "express";
 import { auth } from "../middlewares/auth.middleware.js";
-
+import { authIsAdmin } from "../middlewares/isadmin.middleware.js";
 import {
   CreateNewItemData,
   deleteItemData,
