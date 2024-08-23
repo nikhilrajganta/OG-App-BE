@@ -9,12 +9,31 @@ import {
 import { v4 as uuidv4 } from "uuid";
 
 async function getAllItem(request, response) {
-  try {
-    const allItems = await getItems();
-    response.send(allItems.data);
-  } catch (err) {
-    response.status(500).send({ msg: "Unable to get Items" });
+  const { search } = request.query;
+  if (!search) {
+    try {
+      const allitems = await getItems();
+      response.status(200).send(allitems.data);
+      return;
+    } catch (err) {
+      console.log(err);
+      response.status(500).send({ msg: " No data found " });
+    }
   }
+  const filterData = await Items.scan
+    .where(
+      ({ name, location, description }, { contains }) => `
+      ${contains(name, search)} OR ${contains(location, search)} OR ${contains(
+        description,
+        search
+      )}
+      `
+    )
+    .go();
+
+  console.log(filterData);
+
+  response.send(filterData.data);
 }
 
 async function getallItemById(request, response) {
