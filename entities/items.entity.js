@@ -15,15 +15,18 @@ const Items = new Entity(
       },
       name: {
         type: "string",
+        required: true,
       },
       price: {
         type: "number",
       },
       location: {
         type: "string",
+        required: true,
       },
       description: {
         type: "string",
+        required: true,
       },
       banner_img: {
         type: "string",

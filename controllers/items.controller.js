@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 
 async function getAllItem(request, response) {
   const { search } = request.query;
+
   if (!search) {
     try {
       const allitems = await getItems();
@@ -17,23 +18,27 @@ async function getAllItem(request, response) {
       return;
     } catch (err) {
       console.log(err);
-      response.status(500).send({ msg: " No data found " });
+      response.status(500).send({ msg: "No data found" });
     }
   }
-  const filterData = await Items.scan
-    .where(
-      ({ name, location, description }, { contains }) => `
-      ${contains(name, search)} OR ${contains(location, search)} OR ${contains(
-        description,
-        search
-      )}
-      `
-    )
-    .go();
 
-  console.log(filterData);
+  const lowerCaseSearch = search.toLowerCase();
 
-  response.send(filterData.data);
+  try {
+    const allItems = await getItems();
+    const filteredItems = allItems.data.filter((item) => {
+      return (
+        item.name.toLowerCase().includes(lowerCaseSearch) ||
+        item.location.toLowerCase().includes(lowerCaseSearch)
+      );
+    });
+
+    console.log(filteredItems);
+    response.status(200).send(filteredItems);
+  } catch (err) {
+    console.error(err);
+    response.status(500).send({ msg: "Error fetching items" });
+  }
 }
 
 async function getallItemById(request, response) {
