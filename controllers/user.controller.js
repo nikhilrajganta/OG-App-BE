@@ -25,7 +25,7 @@ async function createNewUser(request, response) {
   const getUserByUname = await getUserByName(data.username);
 
   if (getUserByUname.data) {
-    response.status(404).send({ msg: "user already exist" });
+    response.status(404).send({ msg: "Username already taken..." });
     return;
   }
 
