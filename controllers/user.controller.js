@@ -35,7 +35,7 @@ async function createNewUser(request, response) {
     password: hashpassword,
     roleId: roleId,
   };
-  console.log(hashedData);
+  // console.log(hashedData);
 
   try {
     await createUser(hashedData);
